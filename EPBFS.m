@@ -1,11 +1,10 @@
-classdef EPBFS < ALGORITHM
+classdef FPPFS < ALGORITHM
 % <multi> <binary> <constrained/none> 
-% Nondominated sorting genetic algorithm II % 14,15,16,20,21,22,23,24,25,27,29,32,33,36,37,38,42,45,46
+% A Filter-based Performance Predictor for Multiobjective Feature Selection
+% 14,20,21,22,24,27,29,32,36,37,38,42,45,46,52,53,55,56
 
 %------------------------------- Reference --------------------------------
-% K. Deb, A. Pratap, S. Agarwal, and T. Meyarivan, A fast and elitist
-% multiobjective genetic algorithm: NSGA-II, IEEE Transactions on
-% Evolutionary Computation, 2002, 6(2): 182-197.
+% Learning to Preselection: A Filter-based Performance Predictor for Multiobjective Feature Selection in Classification
 %------------------------------- Copyright --------------------------------
 % Copyright (c) 2021 BIMK Group. You are free to use the PlatEMO for
 % research purposes. All publications which use this platform or any code
@@ -31,13 +30,15 @@ classdef EPBFS < ALGORITHM
 
             % Initialize the training set for the ensemble model
             TrainingSet = Population;
+            L = [];
 
             while Algorithm.NotTerminated(Population)
                 % Calculate classification error rank in training set
                 [realRank, approximateRank] = CalculateClassificationErrorRank(TrainingSet, MI_fc, MI_ff, SU_fc, SU_ff, MI_cc, RedNor, RelNor, RedCR);
 
                 % Calculate weights
-                [index_w, pro] = CalculateWeights(realRank, approximateRank);
+                [max_w, index_w, pro] = CalculateWeights(realRank, approximateRank);
+                L = [L, max_w];
 
                 % Mating selection
                 MatingPool = TournamentSelection(2, 5*Problem.N, FrontNo, -CrowdDis);
@@ -65,6 +66,7 @@ classdef EPBFS < ALGORITHM
 
                 %%%%% Applied to the test set %%%%%
                 Population = FSTraining2Test(Problem, Population);
+                disp(L);
             end
         end
     end
@@ -195,7 +197,7 @@ function PredictRank = PredictClassificationErrorRank(Offspring, MI_fc, MI_ff, S
     [~, PredictRank] = sort(Rank);
 end
 
-function [index_w, pro] = CalculateWeights(F, Fpre)
+function [max_w, index_w, pro] = CalculateWeights(F, Fpre)
     %% Calculate the weight and the selection probability
     w = zeros(size(Fpre, 2), 1);
     for i=1:size(Fpre, 2)
