@@ -9,13 +9,15 @@ function Offspring = Preselection(Offspring, PopObj, N, pro, similarity)
     index1 = find(similarity ==1);
     randnum = size(index0, 1);
     if randnum >= N-num
-        randomSelect = randperm(randnum, N - num);
-        Next(:, index0(randomSelect)) = true;
+        SelectedRatio = mean(Offspring(index0, :), 2);
+        [~, sortSelRatio] = sort(SelectedRatio);
+        Next(:, index0(sortSelRatio(1:N-num))) = true;
     else
         Next(:, index0) = true;
         neednum = N - num - randnum;
-        randomSelect = randperm(N-randnum, neednum);
-        Next(:, index1(randomSelect)) = true;
+        SelectedRatio = mean(Offspring(index1, :), 2);
+        [~, sortSelRatio] = sort(SelectedRatio);
+        Next(:, index1(sortSelRatio(1:neednum))) = true;
     end
     
     % Selection based on the predicted classification error rank
