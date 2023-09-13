@@ -1,5 +1,5 @@
 function [Population, FrontNo, CrowdDis] = EnvironmentalSelection(Population, N)
-% The environmental selection of EPBFS
+% The environmental selection of FPPFS
 
 %------------------------------- Copyright --------------------------------
 % Copyright (c) 2021 BIMK Group. You are free to use the PlatEMO for
