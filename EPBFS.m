@@ -1,7 +1,6 @@
 classdef FPPFS < ALGORITHM
 % <multi> <binary> <constrained/none> 
 % A Filter-based Performance Predictor for Multiobjective Feature Selection
-% 14,20,21,22,24,27,29,32,36,37,38,42,45,46,52,53,55,56
 
 %------------------------------- Reference --------------------------------
 % Learning to Preselection: A Filter-based Performance Predictor for Multiobjective Feature Selection in Classification
@@ -17,7 +16,7 @@ classdef FPPFS < ALGORITHM
     methods
         function main(Algorithm,Problem)
             %% Setting population size and maxFE for fair comparison %%
-            [Problem.N, Problem.maxFE] = InitialExperimentSetting(Problem);
+            %[Problem.N, Problem.maxFE] = InitialExperimentSetting(Problem);
             
             % Calculate correlations
             [MI_fc, MI_ff, SU_fc, SU_ff, MI_cc, RedNor, RelNor, RedCR] = InitializeCorrelations(Problem);
@@ -65,8 +64,7 @@ classdef FPPFS < ALGORITHM
                 [Population, FrontNo, CrowdDis] = EnvironmentalSelection([Population, Offspring], Problem.N);
 
                 %%%%% Applied to the test set %%%%%
-                Population = FSTraining2Test(Problem, Population);
-                disp(L);
+                %Population = FSTraining2Test(Problem, Population);
             end
         end
     end
