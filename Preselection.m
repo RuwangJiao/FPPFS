@@ -1,5 +1,5 @@
 function Offspring = Preselection(Offspring, PopObj, N, pro, similarity)
-    %% Preselection of EPBFS
+    %% Preselection of FPPFS
     
     num = ceil(pro*N); % Number of preselected solutions based on classification error rate
     
