@@ -27,7 +27,7 @@ classdef FPPFS < ALGORITHM
             % Environmental selection
             [Population, FrontNo, CrowdDis] = EnvironmentalSelection(Population, Problem.N);
 
-            % Initialize the training set for the ensemble model
+            % Initialize the training set for the performance predictor
             TrainingSet = Population;
             L = [];
 
@@ -48,7 +48,7 @@ classdef FPPFS < ALGORITHM
                 % Similarity of selected feature ratio
                 similarity = CalculateSimilarity(Offspring, Population);
 
-                % Predicting classification error via ensemble model
+                % Predicting classification error via performance predictor
                 PredictRank = PredictClassificationErrorRank(Offspring, MI_fc, MI_ff, SU_fc, SU_ff, MI_cc, RedNor, RelNor, RedCR, index_w);
 
                 % Preselection
@@ -57,7 +57,7 @@ classdef FPPFS < ALGORITHM
                 % Evaluation for each solution
                 Offspring = SOLUTION(Offspring);
 
-                % Training set update for the ensemble model
+                % Training set update for the performance predictor
                 TrainingSet = UpdateTrainingSet([TrainingSet, Offspring], Problem.N);
 
                 % Environmental selection
@@ -138,7 +138,7 @@ function similarity = CalculateSimilarity(Offspring, Population)
 end
 
 function [realRank, approximateRank] = CalculateClassificationErrorRank(TrainingData, MI_fc, MI_ff, SU_fc, SU_ff, MI_cc, RedNor, RelNor, RedCR)
-    %% Calculate classification error rank in training set
+    %% Calculate classification error rank in the training set
     PopObj = TrainingData.objs;
     PopDec = logical(TrainingData.decs);
     [~, Rank1] = sort(PopObj(:,1));
