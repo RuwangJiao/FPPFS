@@ -1,9 +1,10 @@
 classdef FPPFS < ALGORITHM
 % <multi> <binary> <constrained/none> 
 % A Filter-based Performance Predictor for Multiobjective Feature Selection
-
 %------------------------------- Reference --------------------------------
-% Learning to Preselection: A Filter-based Performance Predictor for Multiobjective Feature Selection in Classification
+% R. Jiao, B. Xue, M. Zhang. Learning to Preselection: A Filter-based Performance
+% Predictor for Multiobjective Feature Selection in Classification. IEEE 
+Transactions on Evolutionary Computation, 2024, doi: 10.1109/TEVC.2024.3373802.
 %------------------------------- Copyright --------------------------------
 % Copyright (c) 2021 BIMK Group. You are free to use the PlatEMO for
 % research purposes. All publications which use this platform or any code
